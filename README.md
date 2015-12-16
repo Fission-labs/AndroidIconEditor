@@ -4,12 +4,12 @@
 Using this plugin you can edit color and size of the icons
 
 
-![capture](https://raw.githubusercontent.com/kiranfl/Android_Icon_Editor/master/docs/demo.gif)
+![capture](https://raw.githubusercontent.com/fission-labs/AndroidIconEditor/master/docs/demo.gif)
 
 #Installation
 
 ##Manually
-1. Download the [AndroidIconEditor.jar](https://raw.githubusercontent.com/kiranfl/Android_Icon_Editor/master/AndroidIconEditor.jar)
+1. Download the [AndroidIconEditor.jar](https://raw.githubusercontent.com/fission-labs/AndroidIconEditor/master/AndroidIconEditor.jar)
 
 On MAC:
 
@@ -33,4 +33,4 @@ Go `File > Settings... > Plugins > Browse repositories`, then search `Android Ic
 
 ##License:
 
-(https://raw.githubusercontent.com/kiranfl/Android_Icon_Editor/master/LICENSE)
+(https://raw.githubusercontent.com/fission-labs/AndroidIconEditor/master/LICENSE)

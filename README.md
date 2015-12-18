@@ -33,4 +33,4 @@ Go `File > Settings... > Plugins > Browse repositories`, then search `Android Ic
 
 ##License:
 
-(https://raw.githubusercontent.com/fission-labs/AndroidIconEditor/master/LICENSE)
+https://raw.githubusercontent.com/fission-labs/AndroidIconEditor/master/LICENSE

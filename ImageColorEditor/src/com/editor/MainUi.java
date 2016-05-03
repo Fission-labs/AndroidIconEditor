@@ -1,5 +1,7 @@
 package com.editor;
 
+import com.intellij.util.ui.UIUtil;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -24,20 +26,15 @@ public class MainUi extends JFrame implements ActionListener {
     private static MainUi m;
     public BufferedImage originalImage, copyImage;
     int image_Xpos, image_Ypos;
-    private String fileItems[] = {"Open", "Save"};
-    private String editItems[] = {"Edit Size"};
-    private JMenu fileMenu, editMenu;
-    private JMenuBar menuBar;
-    private Color requiredColor;
     private JTextField resPathJTF, toColorCodeJTF, fromColorCodeJTF;
-    private JLabel resPathJL, toColorCodeJL, imagePreviewJL, fromColorCodeJL, colorPreviewBox;
-    private JButton addBtn, openColorChooserBtn, resetBtn;
-    private File file;
-    private JFileChooser jFileChooser;
+    private JLabel imagePreviewJL;
+    private JLabel colorPreviewBox;
+    private JButton openColorChooserBtn;
+    private JButton resetBtn;
     private JColorChooser jColorChooser;
     private boolean isColorChooserVisible = false;
     private int red, green, blue;
-    private ResizePanel resizePanel;
+    private ZoomDialog zoomDialog;
 
     public MainUi() {
         m = this;
@@ -51,16 +48,18 @@ public class MainUi extends JFrame implements ActionListener {
         // creating border
         Border border = BorderFactory.createEtchedBorder();
 
-        fileMenu = new JMenu("File");
-        editMenu = new JMenu("Edit");
-        menuBar = new JMenuBar();
-        for (int i = 0; i < fileItems.length; i++) {
-            JMenuItem item = new JMenuItem(fileItems[i]);
+        JMenu fileMenu = new JMenu("File");
+        JMenu editMenu = new JMenu("Edit");
+        JMenuBar menuBar = new JMenuBar();
+        String[] fileItems = {"Open", "Save"};
+        for (String fileItem : fileItems) {
+            JMenuItem item = new JMenuItem(fileItem);
             item.addActionListener(this);
             fileMenu.add(item);
         }
-        for (int i = 0; i < editItems.length; i++) {
-            JMenuItem item = new JMenuItem(editItems[i]);
+        String[] editItems = {"Zoom", "Edit Size"};
+        for (String editItem : editItems) {
+            JMenuItem item = new JMenuItem(editItem);
             item.addActionListener(this);
             editMenu.add(item);
         }
@@ -68,6 +67,7 @@ public class MainUi extends JFrame implements ActionListener {
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
 
+        zoomDialog = new ZoomDialog(this);
         jColorChooser = new JColorChooser();
         resPathJTF = new JTextField();
         toColorCodeJTF = new JTextField();
@@ -77,12 +77,12 @@ public class MainUi extends JFrame implements ActionListener {
         fromColorCodeJTF.setFont(new Font("Times New Roman", Font.BOLD, 16));
         fromColorCodeJTF.setToolTipText("Click on any part of the image which you want to apply color changes");
 
-        resPathJL = new JLabel("Browse your image file here");
-        toColorCodeJL = new JLabel("Enter Color Code");
-        fromColorCodeJL = new JLabel("Pick Color From Image");
+        JLabel resPathJL = new JLabel("Browse your image file here");
+        JLabel toColorCodeJL = new JLabel("Enter Color Code");
+        JLabel fromColorCodeJL = new JLabel("Pick Color From Image");
         colorPreviewBox = new JLabel();
         imagePreviewJL = new JLabel();
-        addBtn = new JButton("Add");
+        JButton addBtn = new JButton("Add");
         openColorChooserBtn = new JButton("Show Color Picker");
         resetBtn = new JButton("Reset");
 
@@ -131,10 +131,6 @@ public class MainUi extends JFrame implements ActionListener {
 
     }
 
-    public static void showCompleteDialog(int j) {
-        JOptionPane.showMessageDialog(m, j + " files generated successfully");
-    }
-
     public static MainUi getInstance() {
         return m;
     }
@@ -155,12 +151,11 @@ public class MainUi extends JFrame implements ActionListener {
             c = colorFromChooser;
         }
         //We should pass this value to SearchAndSave class, to apply same color to other files
-        requiredColor = c;
 
         int width = originalImage.getWidth();
         int height = originalImage.getHeight();
-        copyImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        copyImage.setData((WritableRaster) originalImage.getData());
+        copyImage = UIUtil.createImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        copyImage.setData(originalImage.getData());
         WritableRaster raster = copyImage.getRaster();
 
         for (int xx = 0; xx < width; xx++) {
@@ -209,14 +204,28 @@ public class MainUi extends JFrame implements ActionListener {
         switch (e.getActionCommand()) {
             case "Add":
             case "Open":
-                jFileChooser = new JFileChooser();
+                JFileChooser jFileChooser = new JFileChooser();
                 jFileChooser.setFileFilter(new FileNameExtensionFilter("Image files only", "png", "jpg"));
                 int result = jFileChooser.showOpenDialog(this);
                 if (result == JFileChooser.APPROVE_OPTION) {
-                    file = jFileChooser.getSelectedFile();
+                    File file = jFileChooser.getSelectedFile();
                     setImageIcon(file);
                 }
 
+                break;
+            case "Zoom":
+                ResizePanel resizePanel;
+                if (resPathJTF.getText() != null
+                        && !resPathJTF.getText().equalsIgnoreCase("")) {
+                    resizePanel = new ResizePanel(originalImage.getWidth(),
+                            originalImage.getHeight());
+                    zoomDialog.showZoom(resizePanel,
+                            (BufferedImage) ((ImageIcon) imagePreviewJL.getIcon())
+                                    .getImage());
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "You should select image first");
+                }
                 break;
             case "Edit Size":
                 if (resPathJTF.getText() != null && !resPathJTF.getText().equalsIgnoreCase("")) {
@@ -262,7 +271,7 @@ public class MainUi extends JFrame implements ActionListener {
             case "Save":
                 if (resPathJTF.getText() != null && !resPathJTF.getText().equalsIgnoreCase("")) {
 
-                    File file = new File(resPathJTF.getText().toString());
+                    File file = new File(resPathJTF.getText());
                     jFileChooser = new JFileChooser();
                     jFileChooser.setSelectedFile(file);
                     int choose_option = jFileChooser.showSaveDialog(this);

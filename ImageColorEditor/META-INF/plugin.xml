@@ -1,10 +1,10 @@
-<idea-plugin version="9">
-  <id>com.fissionlabs</id>
-  <name>Android Icon Editor</name>
-  <version>1.4</version>
-  <vendor email="support@yourcompany.com" url="http://www.fissionlabs.com">FissionLabs</vendor>
+<idea-plugin version="12">
+    <id>com.fissionlabs</id>
+    <name>Android Icon Editor</name>
+    <version>1.5</version>
+    <vendor email="support@yourcompany.com" url="http://www.fissionlabs.com">FissionLabs</vendor>
 
-  <description><![CDATA[
+    <description><![CDATA[
   <b>Edit Color:</b>
       Using this you can change selected icon color to any color.<br>
       1. Add or Drag icon to image area.<br>
@@ -34,7 +34,12 @@
 
     ]]></description>
 
-  <change-notes><![CDATA[
+    <change-notes><![CDATA[
+     <b>1.5</b><br>
+     1. Added Icon zoom functionality.<br>
+     2. Added launcher icon.<br>
+     3. Removing deprecated code. <br><br>
+
      <b>1.4</b><br>
      1. Added Icon resize functionality.<br>
      2. Added File and Edit menus in menu bar. <br>
@@ -44,38 +49,39 @@
      Added Android studio in depends list.<br>
 
     ]]>
-  </change-notes>
+    </change-notes>
 
-  <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
-  <idea-version since-build="131"/>
+    <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
+    <idea-version since-build="131"/>
 
-  <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
-       on how to target different products -->
-  <!-- uncomment to enable plugin in all products
-  <depends>com.intellij.modules.lang</depends>
-  -->
+    <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
     <depends>com.intellij.modules.java</depends>
     <depends>org.jetbrains.android</depends>
 
 
-  <extensions defaultExtensionNs="com.intellij">
-    <!-- Add your extensions here -->
-  </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
 
-  <application-components>
-    <!-- Add your application components here -->
-  </application-components>
+    <application-components>
+        <!-- Add your application components here -->
+    </application-components>
 
-  <project-components>
-    <!-- Add your project components here -->
-  </project-components>
+    <project-components>
+        <!-- Add your project components here -->
+    </project-components>
 
-  <actions>
-    <!-- Add your actions here -->
-      <action class="com.editor.Home" id="ImageColorEditor"
-              text = "Android Icon Editor">
-          <add-to-group group-id="NewGroup" anchor="last"/>
-      </action>
-  </actions>
+    <actions>
+        <!-- Add your actions here -->
+        <action class="com.editor.Home" id="ImageColorEditor"
+                text="Android Icon Editor"
+                icon="/resources/ic_launcher.png">
+            <add-to-group group-id="NewGroup" anchor="last"/>
+        </action>
+    </actions>
 
 </idea-plugin>

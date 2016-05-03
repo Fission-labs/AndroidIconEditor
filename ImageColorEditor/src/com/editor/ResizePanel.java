@@ -1,22 +1,22 @@
 package com.editor;
 
+import com.intellij.util.ui.UIUtil;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class ResizePanel extends JPanel {
-    private JLabel widthJL, heightJL;
     public JSpinner widhtJS, heightJS;
-    private SpinnerModel spinnerModelWidth, spinnerModelHeight;
 
     public ResizePanel(int initial_width, int initial_height) {
         /*Border border = BorderFactory.createRaisedBevelBorder();
         setBorder(border);*/
         setLayout(null);
-        widthJL = new JLabel("Width");
-        heightJL = new JLabel("Height");
-        spinnerModelWidth = new SpinnerNumberModel(initial_width, 10, initial_width + 20, 1);
-        spinnerModelHeight = new SpinnerNumberModel(initial_height, 10, initial_height + 20, 1);
+        JLabel widthJL = new JLabel("Width");
+        JLabel heightJL = new JLabel("Height");
+        SpinnerModel spinnerModelWidth = new SpinnerNumberModel(initial_width, 10, initial_width + 20, 1);
+        SpinnerModel spinnerModelHeight = new SpinnerNumberModel(initial_height, 10, initial_height + 20, 1);
         widhtJS = new JSpinner(spinnerModelWidth);
         heightJS = new JSpinner(spinnerModelHeight);
 
@@ -78,7 +78,7 @@ public class ResizePanel extends JPanel {
             }
 
 
-            BufferedImage tmp = new BufferedImage(w, h, type);
+            BufferedImage tmp = UIUtil.createImage(w, h, type);
             Graphics2D g2 = tmp.createGraphics();
             //g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, hint);
             g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);

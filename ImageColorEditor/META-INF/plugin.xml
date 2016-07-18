@@ -2,7 +2,7 @@
     <id>com.fissionlabs</id>
     <name>Android Icon Editor</name>
     <version>1.5</version>
-    <vendor email="support@yourcompany.com" url="http://www.fissionlabs.com">FissionLabs</vendor>
+    <vendor email="kiran1.rajam@gmail.com" url="http://www.fissionlabs.com">FissionLabs</vendor>
 
     <description><![CDATA[
   <b>Edit Color:</b>
@@ -12,17 +12,29 @@
       3. Now enter color you want to replace with.<br>
       4. Or you can set color using color chooser also.<br>
       5. Repeat steps 2,3,4 until you get the icon in required colors.<br>
-      6. If you not satisfied with the changes just click Reset button and try again.<br>
-      7. To save your changes open File menu and click Save.<br>
+      6. If you not satisfied with the changes just click <b>Reset</b> button and try again.<br>
+      7. To save your changes open <b>File</b> menu and click <b>Save</b>.<br>
       <b>NOTE:</b>
       <br>
       Some times some pixels are in still old color, this will make your image dirty.<br>
       So observe carefully before save your image.<br>
       Click on those pixels and apply color changes.<br><br>
+
+  <b>Remove Alpha:</b>
+      Using this you can change selected area of icon to fully transparent.<br>
+      1. Add or Drag icon to image area.<br>
+      2. Open Edit menu and click on <b>Remove Alpha</b>.<br>
+      3. It opens a new window with more options.<br>
+      4. You can select area of icon by drawing Rectangle or Ellipse or simply a Line.<br>
+      5. Click <b>Apply</b> button then the entire selected area will be converted to transparent.<br>
+      6. There is one more options <b>Select Color</b>.<br>
+      7. For example if icon contains red color and you want remove that color from icon.<br>
+      8. Then simply click on that color and it will converts all red color areas to transparent.<br><br>
+
   <b>Edit Size:</b>
       Using this you can change icon size.<br>
       1. Add or Drag icon to image area.<br>
-      2. Open Edit menu and click Edit Size.<br>
+      2. Open Edit menu and click <b>Edit Size</b>.<br>
       3. Give width and height and click ok button.<br>
       4. If you not satisfied with the changes just click Reset button and try again.<br>
       5. To save your changes open File menu and click Save.<br>
@@ -36,8 +48,8 @@
 
     <change-notes><![CDATA[
      <b>1.5</b><br>
-     1. Added Icon zoom functionality.<br>
-     2. Added launcher icon.<br>
+     1. Added launcher icon.<br>
+     2. Added Remove Alpha functionality<br>
      3. Removing deprecated code. <br><br>
 
      <b>1.4</b><br>

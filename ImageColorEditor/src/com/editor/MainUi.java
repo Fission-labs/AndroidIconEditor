@@ -34,7 +34,6 @@ public class MainUi extends JFrame implements ActionListener {
     private JColorChooser jColorChooser;
     private boolean isColorChooserVisible = false;
     private int red, green, blue;
-    private ZoomDialog zoomDialog;
 
     public MainUi() {
         m = this;
@@ -57,7 +56,7 @@ public class MainUi extends JFrame implements ActionListener {
             item.addActionListener(this);
             fileMenu.add(item);
         }
-        String[] editItems = {"Zoom", "Edit Size"};
+        String[] editItems = {"Remove Alpha", "Resize"};
         for (String editItem : editItems) {
             JMenuItem item = new JMenuItem(editItem);
             item.addActionListener(this);
@@ -67,7 +66,6 @@ public class MainUi extends JFrame implements ActionListener {
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
 
-        zoomDialog = new ZoomDialog(this);
         jColorChooser = new JColorChooser();
         resPathJTF = new JTextField();
         toColorCodeJTF = new JTextField();
@@ -213,24 +211,46 @@ public class MainUi extends JFrame implements ActionListener {
                 }
 
                 break;
-            case "Zoom":
-                ResizePanel resizePanel;
+            case "Remove Alpha":
+
                 if (resPathJTF.getText() != null
                         && !resPathJTF.getText().equalsIgnoreCase("")) {
-                    resizePanel = new ResizePanel(originalImage.getWidth(),
-                            originalImage.getHeight());
-                    zoomDialog.showZoom(resizePanel,
-                            (BufferedImage) ((ImageIcon) imagePreviewJL.getIcon())
-                                    .getImage());
+
+                    Icon icon = imagePreviewJL.getIcon();
+                    BufferedImage bi = UIUtil.createImage(icon.getIconWidth(),
+                            icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+                    Graphics g = bi.createGraphics();
+                    // paint the Icon to the BufferedImage.
+                    icon.paintIcon(null, g, 0, 0);
+                    g.dispose();
+
+                    AlphaEditPanel alphaEditPanel = new AlphaEditPanel(bi);
+                    alphaEditPanel.setPreferredSize(new Dimension(700, 400));
+
+                    int selectedOption1 = JOptionPane
+                            .showConfirmDialog(this, alphaEditPanel,
+                                    "Remove Alpha", JOptionPane.OK_CANCEL_OPTION,
+                                    JOptionPane.PLAIN_MESSAGE);
+                    if (selectedOption1 == 0) {
+                        resetBtn.setEnabled(true);
+                        if (copyImage != null) {
+                            copyImage = bi;
+                        } else {
+                            originalImage = bi;
+                        }
+                        imagePreviewJL.setIcon(new ImageIcon(bi));
+                    }
+
                 } else {
                     JOptionPane.showMessageDialog(null,
                             "You should select image first");
                 }
+
                 break;
-            case "Edit Size":
+            case "Resize":
                 if (resPathJTF.getText() != null && !resPathJTF.getText().equalsIgnoreCase("")) {
                     resetBtn.setEnabled(true);
-                    resizePanel = new ResizePanel(originalImage.getWidth(), originalImage.getHeight());
+                    ResizePanel resizePanel = new ResizePanel(originalImage.getWidth(), originalImage.getHeight());
                     resizePanel.setPreferredSize(new Dimension(300, 150));
                     int selectedOption = JOptionPane.showConfirmDialog(this, resizePanel, "Edit Size", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
                     if (selectedOption == 0) {
